@@ -9,6 +9,7 @@ A commandline tic-tac-toe game for idle fun.
 
 ## Details
 There are 4 computer AIs to play against, each with varying degrees of frustrating stupidity:
+
 1. `Random`, which plays a random move each time.
 2. `Defensive`, which plays randomly but blocks threats when it is about to lose.
 3. `Offensive`, which plays like Defensive but will always play a winning move if one is available.
