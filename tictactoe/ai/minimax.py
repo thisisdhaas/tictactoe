@@ -16,7 +16,16 @@ def optimal(game_state, turn):
     return best_move
 
 
+def hash_game_state(game_state):
+    return ''.join([symbol for row in game_state for symbol in row])
+
+
+MINIMAX_TREE = {}
 def minimax(game_state, turn, maximizer_turn, round_num=0, top=False):
+    node_key = hash_game_state(game_state)
+    if node_key in MINIMAX_TREE:
+        return MINIMAX_TREE[node_key]
+
     possible_moves = get_possible_moves(game_state)
     if not possible_moves or get_winner(game_state)[0] is not None:
         return _score(game_state, maximizer_turn), None, round_num
@@ -41,7 +50,9 @@ def minimax(game_state, turn, maximizer_turn, round_num=0, top=False):
                 progress = 100. * (i + 1.) / len(possible_moves)
                 sys.stdout.write('Computer is thinking... Progress: %.02f%%\r' % progress)
                 sys.stdout.flush()
-        return (best, best_move, best_move_depth)
+        ret = (best, best_move, best_move_depth)
+        MINIMAX_TREE[node_key] = ret
+        return ret
 
     else:
         best = 2  # Higher than highest possible score
@@ -57,7 +68,9 @@ def minimax(game_state, turn, maximizer_turn, round_num=0, top=False):
                 best_move = move
                 best = move_score
                 best_move_depth = move_depth
-        return (best, best_move, best_move_depth)
+        ret = (best, best_move, best_move_depth)
+        MINIMAX_TREE[node_key] = ret
+        return ret
 
 
 def _score(game_state, our_turn):
