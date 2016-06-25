@@ -12,7 +12,8 @@ def optimal(game_state, turn):
     sys.stdout.flush()
 
     # Run the minimax algorithm on the full remaining game tree
-    best_score, best_move, best_move_depth = minimax(game_state, turn, turn, top=True)
+    best_score, best_move, best_move_depth = minimax(
+        game_state, turn, turn, top=True)
     return best_move
 
 
@@ -36,7 +37,11 @@ def minimax(game_state, turn, maximizer_turn, round_num=0, top=False):
         best_move_depth = 10  # Larger than deepest possible tree.
         for i, move in enumerate(possible_moves):
             move_score, _, move_depth = minimax(
-                _simulate_move(game_state, move, turn), toggle_turn(turn), maximizer_turn, round_num + 1)
+                _simulate_move(game_state, move, turn),
+                toggle_turn(turn),
+                maximizer_turn,
+                round_num + 1
+            )
 
             # break ties by preferring faster wins
             is_faster = move_depth < best_move_depth
@@ -48,7 +53,8 @@ def minimax(game_state, turn, maximizer_turn, round_num=0, top=False):
             # Print a progress bar at the top level
             if top:
                 progress = 100. * (i + 1.) / len(possible_moves)
-                sys.stdout.write('Computer is thinking... Progress: %.02f%%\r' % progress)
+                sys.stdout.write(
+                    'Computer is thinking... Progress: %.02f%%\r' % progress)
                 sys.stdout.flush()
         ret = (best, best_move, best_move_depth)
         MINIMAX_TREE[node_key] = ret
@@ -60,7 +66,11 @@ def minimax(game_state, turn, maximizer_turn, round_num=0, top=False):
         best_move_depth = 10  # Larger than deepest possible tree.
         for move in possible_moves:
             move_score, _, move_depth = minimax(
-                _simulate_move(game_state, move, turn), toggle_turn(turn), maximizer_turn, round_num + 1)
+                _simulate_move(game_state, move, turn),
+                toggle_turn(turn),
+                maximizer_turn,
+                round_num + 1
+            )
 
             # break ties by preferring faster wins
             is_faster = move_depth < best_move_depth

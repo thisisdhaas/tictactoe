@@ -1,7 +1,3 @@
-from ai import optimal
-from ai import random
-from ai import random_blocker
-from ai import random_winner
 from draw import clear
 from draw import print_status
 from draw import print_title
